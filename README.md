@@ -17,6 +17,10 @@ Minio cluster behind nginx-proxy
 
 - If you have a private dns, you have to pass EXTRA_HOST on you application that `DOMAIN_HOST` is `nginx-proxy` gateway
 
+## Restrictions
+
+- buckets should be named: `bucket-<name>`
+
 ## Dependencies
 
 - `nginx-proxy` - https://github.com/ionghitun/nginx-proxy
