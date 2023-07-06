@@ -1,92 +1,99 @@
 version: '3.9'
 services:
-  minio-nginx:
-    container_name: minio-nginx
-    restart: unless-stopped
-    build:
-      context: ./
-      dockerfile: docker/nginx/Dockerfile
-    volumes:
-      - ./:/var/www
-      - ./docker/nginx/${VHOST_FILE}:/etc/nginx/conf.d/custom.conf
-    ports:
-      - "80"
-    links:
-      - minio-minio1
-      - minio-minio2
-      - minio-minio3
-      - minio-minio4
-    environment:
-      VIRTUAL_HOST: ${DOMAIN_HOST}
-      VIRTUAL_PORT: 80
-      LETSENCRYPT_HOST: ${DOMAIN_HOST}
-      LETSENCRYPT_EMAIL: ${DOMAIN_EMAIL}
-    networks:
-      - nginx-proxy
-      - minio
+    minio-nginx:
+        container_name: minio-nginx
+        restart: unless-stopped
+        build:
+            context: ./
+            dockerfile: docker/nginx/Dockerfile
+        volumes:
+            - ./docker/nginx/${VHOST_FILE}:/etc/nginx/conf.d/custom.conf
+        ports:
+            - "80"
+        links:
+            - minio-minio1
+            - minio-minio2
+            - minio-minio3
+            - minio-minio4
+        environment:
+            VIRTUAL_HOST: ${DOMAIN_HOST}
+            VIRTUAL_PORT: 80
+            LETSENCRYPT_HOST: ${DOMAIN_HOST}
+            LETSENCRYPT_EMAIL: ${DOMAIN_EMAIL}
+        networks:
+            - nginx-proxy
+            - minio
 
-  minio-minio1:
-    image: minio/minio
-    container_name: minio-minio1
-    restart: unless-stopped
-    volumes:
-      - ./data1:/data
-    environment:
-      MINIO_ROOT_USER: ${MINIO_ACCESS_KEY}
-      MINIO_ROOT_PASSWORD: ${MINIO_SECRET_KEY}
-    ports:
-      - "9000"
-      - "9001"
-    networks:
-      - minio
-    command: server http://minio-minio{1...4}/data --console-address ":9001"
-  minio-minio2:
-    image: minio/minio
-    container_name: minio-minio2
-    restart: unless-stopped
-    volumes:
-      - ./data2:/data
-    environment:
-      MINIO_ROOT_USER: ${MINIO_ACCESS_KEY}
-      MINIO_ROOT_PASSWORD: ${MINIO_SECRET_KEY}
-    ports:
-      - "9000"
-      - "9001"
-    networks:
-      - minio
-    command: server http://minio-minio{1...4}/data --console-address ":9001"
-  minio-minio3:
-    image: minio/minio
-    container_name: minio-minio3
-    restart: unless-stopped
-    volumes:
-      - ./data3:/data
-    environment:
-      MINIO_ROOT_USER: ${MINIO_ACCESS_KEY}
-      MINIO_ROOT_PASSWORD: ${MINIO_SECRET_KEY}
-    ports:
-      - "9000"
-      - "9001"
-    networks:
-      - minio
-    command: server http://minio-minio{1...4}/data --console-address ":9001"
-  minio-minio4:
-    image: minio/minio
-    container_name: minio-minio4
-    restart: unless-stopped
-    volumes:
-      - ./data4:/data
-    environment:
-      MINIO_ROOT_USER: ${MINIO_ACCESS_KEY}
-      MINIO_ROOT_PASSWORD: ${MINIO_SECRET_KEY}
-    ports:
-      - "9000"
-      - "9001"
-    networks:
-      - minio
-    command: server http://minio-minio{1...4}/data --console-address ":9001"
+    minio-minio1:
+        image: minio/minio
+        container_name: minio-minio1
+        restart: unless-stopped
+        volumes:
+            - ./data1:/data
+        environment:
+            MINIO_ROOT_USER: ${MINIO_ACCESS_KEY}
+            MINIO_ROOT_PASSWORD: ${MINIO_SECRET_KEY}
+            MINIO_USERNAME: ${MINIO_USERNAME}
+            MINIO_GROUPNAME: ${MINIO_GROUPNAME}
+        ports:
+            - "9000"
+            - "9001"
+        networks:
+            - minio
+        command: server http://minio-minio{1...4}/data --console-address ":9001"
+    minio-minio2:
+        image: minio/minio
+        container_name: minio-minio2
+        restart: unless-stopped
+        volumes:
+            - ./data2:/data
+        environment:
+            MINIO_ROOT_USER: ${MINIO_ACCESS_KEY}
+            MINIO_ROOT_PASSWORD: ${MINIO_SECRET_KEY}
+            MINIO_USERNAME: ${MINIO_USERNAME}
+            MINIO_GROUPNAME: ${MINIO_GROUPNAME}
+        ports:
+            - "9000"
+            - "9001"
+        networks:
+            - minio
+        command: server http://minio-minio{1...4}/data --console-address ":9001"
+    minio-minio3:
+        image: minio/minio
+        container_name: minio-minio3
+        restart: unless-stopped
+        volumes:
+            - ./data3:/data
+        environment:
+            MINIO_ROOT_USER: ${MINIO_ACCESS_KEY}
+            MINIO_ROOT_PASSWORD: ${MINIO_SECRET_KEY}
+            MINIO_USERNAME: ${MINIO_USERNAME}
+            MINIO_GROUPNAME: ${MINIO_GROUPNAME}
+        ports:
+            - "9000"
+            - "9001"
+        networks:
+            - minio
+        command: server http://minio-minio{1...4}/data --console-address ":9001"
+    minio-minio4:
+        image: minio/minio
+        container_name: minio-minio4
+        restart: unless-stopped
+        volumes:
+            - ./data4:/data
+        environment:
+            MINIO_ROOT_USER: ${MINIO_ACCESS_KEY}
+            MINIO_ROOT_PASSWORD: ${MINIO_SECRET_KEY}
+            MINIO_USERNAME: ${MINIO_USERNAME}
+            MINIO_GROUPNAME: ${MINIO_GROUPNAME}
+        ports:
+            - "9000"
+            - "9001"
+        networks:
+            - minio
+        command: server http://minio-minio{1...4}/data --console-address ":9001"
 
 networks:
-  minio:
-  nginx-proxy:
-    external: true
+    minio:
+    nginx-proxy:
+        external: true
