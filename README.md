@@ -14,6 +14,8 @@ Minio cluster behind nginx-proxy
     - AWS_ENDPOINT=http(s)://<DOMAIN_HOST>
     - AWS_USE_PATH_STYLE_ENDPOINT=true
 
+- If you have a private dns, you have to pass EXTRA_HOST on you application that `DOMAIN_HOST` is `nginx-proxy` gateway
+
 ## Dependencies
 
 - `nginx-proxy` - https://github.com/ionghitun/nginx-proxy

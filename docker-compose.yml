@@ -29,12 +29,10 @@ services:
         container_name: minio-minio1
         restart: unless-stopped
         volumes:
-            - ./data1:/data
+            - data1:/data
         environment:
             MINIO_ROOT_USER: ${MINIO_ACCESS_KEY}
             MINIO_ROOT_PASSWORD: ${MINIO_SECRET_KEY}
-            MINIO_USERNAME: ${MINIO_USERNAME}
-            MINIO_GROUPNAME: ${MINIO_GROUPNAME}
         ports:
             - "9000"
             - "9001"
@@ -46,12 +44,10 @@ services:
         container_name: minio-minio2
         restart: unless-stopped
         volumes:
-            - ./data2:/data
+            - data2:/data
         environment:
             MINIO_ROOT_USER: ${MINIO_ACCESS_KEY}
             MINIO_ROOT_PASSWORD: ${MINIO_SECRET_KEY}
-            MINIO_USERNAME: ${MINIO_USERNAME}
-            MINIO_GROUPNAME: ${MINIO_GROUPNAME}
         ports:
             - "9000"
             - "9001"
@@ -63,12 +59,10 @@ services:
         container_name: minio-minio3
         restart: unless-stopped
         volumes:
-            - ./data3:/data
+            - data3:/data
         environment:
             MINIO_ROOT_USER: ${MINIO_ACCESS_KEY}
             MINIO_ROOT_PASSWORD: ${MINIO_SECRET_KEY}
-            MINIO_USERNAME: ${MINIO_USERNAME}
-            MINIO_GROUPNAME: ${MINIO_GROUPNAME}
         ports:
             - "9000"
             - "9001"
@@ -80,18 +74,22 @@ services:
         container_name: minio-minio4
         restart: unless-stopped
         volumes:
-            - ./data4:/data
+            - data4:/data
         environment:
             MINIO_ROOT_USER: ${MINIO_ACCESS_KEY}
             MINIO_ROOT_PASSWORD: ${MINIO_SECRET_KEY}
-            MINIO_USERNAME: ${MINIO_USERNAME}
-            MINIO_GROUPNAME: ${MINIO_GROUPNAME}
         ports:
             - "9000"
             - "9001"
         networks:
             - minio
         command: server http://minio-minio{1...4}/data --console-address ":9001"
+
+volumes:
+    data1:
+    data2:
+    data3:
+    data4:
 
 networks:
     minio:
