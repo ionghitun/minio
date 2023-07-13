@@ -17,10 +17,33 @@ Minio cluster behind nginx-proxy
 
 - If you have a private dns, you have to pass EXTRA_HOST on you application that `DOMAIN_HOST` is `nginx-proxy` gateway
 
-## Restrictions
+## Bucket configs
 
-- buckets should be named: `bucket-<name>`
+- buckets should be named: `bucket-<name>`, this is a known restriction
+- Example for custom policy you can set for a bucket to be private but object to be public visible:
+
+      {
+          "Version": "2012-10-17",
+          "Statement": [
+              {
+                  "Effect": "Allow",
+                  "Principal": {
+                      "AWS": [
+                          "*"
+                      ]
+                  },
+                  "Action": [
+                      "s3:GetObject"
+                  ],
+                  "Resource": [
+                      "arn:aws:s3:::*"
+                  ]
+              }
+          ]
+      }
 
 ## Dependencies
 
 - `nginx-proxy` - https://github.com/ionghitun/nginx-proxy
+
+_Happy Coding!_

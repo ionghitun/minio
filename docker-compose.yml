@@ -2,7 +2,7 @@ version: '3.9'
 services:
     minio-nginx:
         container_name: minio-nginx
-        restart: unless-stopped
+        restart: always
         build:
             context: ./
             dockerfile: docker/nginx/Dockerfile
@@ -27,9 +27,9 @@ services:
     minio-minio1:
         image: minio/minio
         container_name: minio-minio1
-        restart: unless-stopped
+        restart: always
         volumes:
-            - data1:/data
+            - ./data1:/data
         environment:
             MINIO_ROOT_USER: ${MINIO_ACCESS_KEY}
             MINIO_ROOT_PASSWORD: ${MINIO_SECRET_KEY}
@@ -42,9 +42,9 @@ services:
     minio-minio2:
         image: minio/minio
         container_name: minio-minio2
-        restart: unless-stopped
+        restart: always
         volumes:
-            - data2:/data
+            - ./data2:/data
         environment:
             MINIO_ROOT_USER: ${MINIO_ACCESS_KEY}
             MINIO_ROOT_PASSWORD: ${MINIO_SECRET_KEY}
@@ -57,9 +57,9 @@ services:
     minio-minio3:
         image: minio/minio
         container_name: minio-minio3
-        restart: unless-stopped
+        restart: always
         volumes:
-            - data3:/data
+            - ./data3:/data
         environment:
             MINIO_ROOT_USER: ${MINIO_ACCESS_KEY}
             MINIO_ROOT_PASSWORD: ${MINIO_SECRET_KEY}
@@ -72,9 +72,9 @@ services:
     minio-minio4:
         image: minio/minio
         container_name: minio-minio4
-        restart: unless-stopped
+        restart: always
         volumes:
-            - data4:/data
+            - ./data4:/data
         environment:
             MINIO_ROOT_USER: ${MINIO_ACCESS_KEY}
             MINIO_ROOT_PASSWORD: ${MINIO_SECRET_KEY}
@@ -84,12 +84,6 @@ services:
         networks:
             - minio
         command: server http://minio-minio{1...4}/data --console-address ":9001"
-
-volumes:
-    data1:
-    data2:
-    data3:
-    data4:
 
 networks:
     minio:
