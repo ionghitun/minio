@@ -2,7 +2,7 @@ version: '3.9'
 services:
     minio-nginx:
         container_name: minio-nginx
-        restart: always
+        restart: unless-stopped
         build:
             context: ./
             dockerfile: docker/nginx/Dockerfile
@@ -25,9 +25,9 @@ services:
             - minio
 
     minio-minio1:
-        image: minio/minio
         container_name: minio-minio1
-        restart: always
+        image: minio/minio
+        restart: unless-stopped
         volumes:
             - ./data1:/data
         environment:
@@ -37,9 +37,9 @@ services:
             - minio
         command: server http://minio-minio{1...4}/data --console-address ":9001"
     minio-minio2:
-        image: minio/minio
         container_name: minio-minio2
-        restart: always
+        image: minio/minio
+        restart: unless-stopped
         volumes:
             - ./data2:/data
         environment:
@@ -49,9 +49,9 @@ services:
             - minio
         command: server http://minio-minio{1...4}/data --console-address ":9001"
     minio-minio3:
-        image: minio/minio
         container_name: minio-minio3
-        restart: always
+        image: minio/minio
+        restart: unless-stopped
         volumes:
             - ./data3:/data
         environment:
@@ -61,9 +61,9 @@ services:
             - minio
         command: server http://minio-minio{1...4}/data --console-address ":9001"
     minio-minio4:
-        image: minio/minio
         container_name: minio-minio4
-        restart: always
+        image: minio/minio
+        restart: unless-stopped
         volumes:
             - ./data4:/data
         environment:
