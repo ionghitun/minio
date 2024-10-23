@@ -2,14 +2,12 @@ services:
     minio-nginx:
         container_name: minio-nginx
         restart: unless-stopped
-        build:
-            context: ./
-            dockerfile: docker/nginx/Dockerfile
+        image: nginx:latest
         volumes:
             - ./docker/nginx/${VHOST_FILE}:/etc/nginx/conf.d/custom.conf
         ports:
             - "80"
-        links:
+        depends_on:
             - minio-minio1
             - minio-minio2
             - minio-minio3
@@ -25,7 +23,7 @@ services:
 
     minio-minio1:
         container_name: minio-minio1
-        image: minio/minio
+        image: minio/minio:latest
         restart: unless-stopped
         volumes:
             - ./data1:/data
@@ -37,7 +35,7 @@ services:
         command: server http://minio-minio{1...4}/data --console-address ":9001"
     minio-minio2:
         container_name: minio-minio2
-        image: minio/minio
+        image: minio/minio:latest
         restart: unless-stopped
         volumes:
             - ./data2:/data
@@ -49,7 +47,7 @@ services:
         command: server http://minio-minio{1...4}/data --console-address ":9001"
     minio-minio3:
         container_name: minio-minio3
-        image: minio/minio
+        image: minio/minio:latest
         restart: unless-stopped
         volumes:
             - ./data3:/data
@@ -61,7 +59,7 @@ services:
         command: server http://minio-minio{1...4}/data --console-address ":9001"
     minio-minio4:
         container_name: minio-minio4
-        image: minio/minio
+        image: minio/minio:latest
         restart: unless-stopped
         volumes:
             - ./data4:/data
