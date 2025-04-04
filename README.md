@@ -4,9 +4,13 @@ Minio cluster behind nginx-proxy
 
 ## Instructions to use
 
-- copy `.env.example` to `.env` and edit it to match your settings
-- if necessary modify `docker/nginx/custom_dev.conf` to match you `DOMAIN_HOST`
-- run `docker-compose up -d` to bring up containers
+- copy `scripts/.env.example` to `scripts/.env` and edit it to match your settings
+- change other env variables to your needs
+- if necessary modify `scripts/nginx/custom.conf` to match you `DOMAIN_HOST`
+- run `sh scripts/start.sh` to start the project
+- run `sh scripts/stop.sh` to stop the project
+- run `sh scripts/build.sh` to build or rebuild the project
+- run `sh scripts/restart.sh` to restart containers
 - navigate to `DOMAIN_HOST` and setup buckets and access keys
 - where you use, for example in Laravel you need to add extra:
 
