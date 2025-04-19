@@ -1,8 +1,11 @@
 #!/bin/sh
-echo "*** Starting... ***"
+echo
+echo "===== Starting... ====="
+echo
 
 cd scripts || exit
+docker compose up -d
 
-docker compose -p minio up -d
-
-echo "*** Started ***"
+echo
+echo "===== Done! ====="
+echo
