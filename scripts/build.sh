@@ -1,13 +1,14 @@
 #!/bin/sh
 cd scripts || exit
 
-echo "Want to update images before rebuilding? (y/n) [default: y]: "
+echo
+echo "Do you want to update images before rebuilding? (y/n) [default: y]: "
 read UPDATE_IMAGES
 UPDATE_IMAGES=${UPDATE_IMAGES:-y}
 
 if [ "$UPDATE_IMAGES" = "y" ] || [ "$UPDATE_IMAGES" = "Y" ]; then
     echo
-    echo "===== Updating image... ====="
+    echo "===== Updating images... ====="
     echo
 
     NGINX_VERSION=$(grep -oP '^NGINX_VERSION=\K.*' .env)
