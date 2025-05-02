@@ -11,8 +11,8 @@ if [ "$UPDATE_IMAGES" = "y" ] || [ "$UPDATE_IMAGES" = "Y" ]; then
     echo "===== Updating images... ====="
     echo
 
-    NGINX_VERSION=$(grep -oP '^NGINX_VERSION=\K.*' .env)
-    MINIO_VERSION=$(grep -oP '^MINIO_VERSION=\K.*' .env)
+    NGINX_VERSION=$(sed -n 's/^NGINX_VERSION=//p' .env)
+    MINIO_VERSION=$(sed -n 's/^MINIO_VERSION=//p' .env)
 
     docker pull "nginx:$NGINX_VERSION"
     docker pull "minio/minio:$MINIO_VERSION"
@@ -22,8 +22,13 @@ echo
 echo "===== Building and starting containers... ====="
 echo
 
-docker compose build --no-cache
-docker compose up -d
+if command -v docker-compose >/dev/null 2>&1; then
+    docker-compose build --no-cache
+    docker-compose up -d
+else
+    docker compose build --no-cache
+    docker compose up -d
+fi
 
 echo
 echo "===== Done! ====="
